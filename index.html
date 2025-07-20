@@ -13,7 +13,7 @@
         <nav>
             <div class="container">
                 <div class="top-nav">
-                    <img src="./images/spg-logo.svg" alt="SPG Logo">
+                    <img src="./images/spg-logo.svg" alt="SPG Logo" class="top-nav-img">
                     <ul class="menu">
                         <li>
                             <a href="#about-us">
@@ -38,6 +38,38 @@
                             </a>
                         </li>
                     </ul>
+                    <!-- Hamburger Button -->
+                    <button class="hamburger-button">
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                    </button>
+                    <div class="mobile-menu">
+                        <ul>
+                            <li>
+                                <a href="#about-us">
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#services">
+                                    Our Service
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#mentoring-program">
+                                    Mentoring Program 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#contact-us">
+                                    <button class="contact-btn">
+                                        Contact Us
+                                    </button>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
         </nav>
         <section class="hero-section">
@@ -109,9 +141,9 @@
         <section class="testimonials-section">
             <div class="container">
                 <h2>What Our Clients Say</h2>
-                <p class="testimonials-section--para">Trusted by businesses who value precision, partnership, and
-                    results. Here’s what our clients say about working with SPG.</p>
+                <p class="testimonials-section--para">Trusted by businesses who value precision, partnership, and results. Here’s what our clients say about working with SPG.</p>
 
+                
                 <div class="testimonials-grid">
                     <div class="testimonial-card">
                         <div class="testimonial-card--header">
@@ -124,8 +156,7 @@
                             </div>
                         </div>
                         <div class="testimonial-card--body">
-                            <p>SPG’s expertise transformed our financial processes. They’re reliable, responsive, and
-                                genuinely care about helping our business grow.</p>
+                            <p>SPG’s expertise transformed our financial processes. They’re reliable, responsive, and genuinely care about helping our business grow.</p>
                         </div>
                     </div>
                     <div class="testimonial-card">
@@ -139,10 +170,8 @@
                             </div>
                         </div>
                         <div class="testimonial-card--body">
-                            <p>SPG’s expertise transformed our financial processes. They’re reliable, responsive, and
-                                genuinely care about helping our business grow.</p>
+                            <p>SPG’s expertise transformed our financial processes. They’re reliable, responsive, and genuinely care about helping our business grow.</p>
                         </div>
-
                     </div>
                     <div class="testimonial-card">
                         <div class="testimonial-card--header">
@@ -155,10 +184,13 @@
                             </div>
                         </div>
                         <div class="testimonial-card--body">
-                            <p>SPG’s expertise transformed our financial processes. They’re reliable, responsive, and
-                                genuinely care about helping our business grow.</p>
+                            <p>SPG’s expertise transformed our financial processes. They’re reliable, responsive, and genuinely care about helping our business grow.</p>
                         </div>
                     </div>
+                </div>
+                <div class="testimonials-slider-controls">
+                    <button class="testimonial-arrow left" aria-label="Previous testimonial">&#8592;</button>
+                    <button class="testimonial-arrow right" aria-label="Next testimonial">&#8594;</button>
                 </div>
             </div>
         </section>
@@ -190,7 +222,7 @@
             <div class="container">
                 <h2 class="text-center">Get Started Today!</h2>
                 <div class="footer-logo-borderline">
-                    <img src="images/footer-logo.svg" alt="" class="footer-logo-img">
+                    <img src="images/spg-logo.svg" alt="" class="footer-logo-img">
                 </div>
                 <div class="contact-list-3-grid">
                     <div class="contact-list-card">
@@ -248,12 +280,100 @@
     window.addEventListener('scroll', function() {
       const nav = document.querySelector('nav');
       if (!nav) return;
-      if (window.scrollY > 10) {
+      if (window.scrollY > 50) {
         nav.classList.add('nav-scrolled');
       } else {
         nav.classList.remove('nav-scrolled');
       }
     });
+
+    // Active menu highlighting
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuLinks = document.querySelectorAll('.menu a');
+      const sections = [
+        document.getElementById('about-us'),
+        document.getElementById('services'),
+        document.getElementById('mentoring-program'),
+        document.getElementById('contact-us')
+      ];
+      const sectionIds = ['about-us', 'services', 'mentoring-program', 'contact-us'];
+
+      // Highlight on click
+      menuLinks.forEach((link, idx) => {
+        link.addEventListener('click', function() {
+          menuLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Highlight on scroll
+      function onScroll() {
+        let scrollPos = window.scrollY || window.pageYOffset;
+        let offset = 50; // adjust for nav height
+        let found = false;
+        for (let i = 0; i < sections.length; i++) {
+          const section = sections[i];
+          if (!section) continue;
+          const top = section.offsetTop - offset;
+          const bottom = top + section.offsetHeight;
+          if (scrollPos >= top && scrollPos < bottom) {
+            menuLinks.forEach(l => l.classList.remove('active'));
+            menuLinks[i].classList.add('active');
+            found = true;
+            break;
+          }
+        }
+        // If not found (scrolled past last section), highlight last
+        if (!found) {
+          menuLinks.forEach(l => l.classList.remove('active'));
+          if (scrollPos + window.innerHeight >= document.body.scrollHeight - 2) {
+            menuLinks[menuLinks.length - 1].classList.add('active');
+          }
+        }
+      }
+      window.addEventListener('scroll', onScroll);
+      // Initial highlight
+      onScroll();
+    });
+  
+    // Mobile Menu
+    document.addEventListener('DOMContentLoaded', function(){
+        const hamburgerButton = document.querySelector('.hamburger-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        hamburgerButton.addEventListener('click', ()=>{
+            mobileMenu.classList.toggle('active');
+            hamburgerButton.classList.toggle('open');
+        });
+    });
   </script>
+
+  <script>
+// Testimonials slider arrows for mobile
+(function(){
+  function isMobile() {
+    return window.innerWidth <= 670;
+  }
+  function updateArrowVisibility() {
+    var controls = document.querySelector('.testimonials-slider-controls');
+    if (controls) controls.style.display = isMobile() ? 'flex' : 'none';
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var grid = document.querySelector('.testimonials-grid');
+    var left = document.querySelector('.testimonial-arrow.left');
+    var right = document.querySelector('.testimonial-arrow.right');
+    updateArrowVisibility();
+    window.addEventListener('resize', updateArrowVisibility);
+    if (grid && left && right) {
+      left.addEventListener('click', function(){
+        grid.scrollBy({left: -grid.offsetWidth * 0.8, behavior: 'smooth'});
+      });
+      right.addEventListener('click', function(){
+        grid.scrollBy({left: grid.offsetWidth * 0.8, behavior: 'smooth'});
+      });
+    }
+  });
+})();
+</script>
 
 </html>
